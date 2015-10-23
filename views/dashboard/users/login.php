@@ -21,7 +21,7 @@
                 <div class="box-header with-border">
                   <h3 class="box-title"><?=$_SESSION['website_title'];?></h3>
                 </div><!-- /.box-header -->
-                <div class="alert-danger alert" style="display:none;">
+                <div class="alert-danger alert errmsg" style="display:none;">
                   Username or password incorrect.
                 </div>
                 <!-- form start -->

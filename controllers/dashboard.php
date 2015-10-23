@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/js/jquery.min.js"></script>
 <?php
 
 class dashboard extends controller
@@ -28,7 +29,13 @@ class dashboard extends controller
 				header("Location:" . $GLOBALS['ADMIN_ROOT'] . $GLOBALS['tmp_controller'] . '/' . $GLOBALS['tmp_method'] . '/');
 			} else {
 				$_SESSION['islogged'] = false;
-				echo "HERE";
+				?>
+					<script type="text/javascript">
+						$(document).ready(function(){
+							$('.errmsg').show();
+						});
+					</script>
+				<?php
 			}
 		}
 		$this->loadView('dashboard/users','login');
