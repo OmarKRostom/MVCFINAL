@@ -28,6 +28,7 @@ class dashboard extends controller
 				header("Location:" . $GLOBALS['ADMIN_ROOT'] . $GLOBALS['tmp_controller'] . '/' . $GLOBALS['tmp_method'] . '/');
 			} else {
 				$_SESSION['islogged'] = false;
+				echo "HERE";
 			}
 		}
 		$this->loadView('dashboard/users','login');

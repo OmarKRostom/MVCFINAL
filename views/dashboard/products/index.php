@@ -93,31 +93,17 @@
 				<div class="form-group">
 				  <label for="category">Category:</label>
 				  <select class="form-control" id="category">
-				  	<option>-- Choose a category --</option>
-				    <option>Men</option>
-				    <option>Women</option>
-				    <option>Children</option>
-				    <option>Other</option>
-				  </select>
-				</div>
-				<div class="form-group">
-				  <label for="type">Type:</label>
-				  <select class="form-control" id="type">
-				  	<option>-- Choose a type --</option>
-				    <option>Clothes</option>
-				    <option>Shoes</option>
-				    <option>Glasses</option>
-				    <option>Underwear</option>
+				  	<?php
+						DB::getInstance()->fillInput("categories","en_name");
+					?>
 				  </select>
 				</div>
 				<div class="form-group">
 				  <label for="brand">Brand:</label>
 				  <select class="form-control" id="brand">
-				  	<option>-- Choose a brand --</option>
-				    <option>American Eagle</option>
-				    <option>Diesel</option>
-				    <option>H&M</option>
-				    <option>Ralph Lauren</option>
+				  	<?php
+						DB::getInstance()->fillInput("brands","en_name");
+					?>
 				  </select>
 				</div>
 		    </form>

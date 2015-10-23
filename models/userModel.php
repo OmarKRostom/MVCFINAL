@@ -12,7 +12,7 @@ class userModel
   function checkUser($name,$pass) {
   	$users = DB::getInstance()->query("SELECT * FROM users WHERE name = ?"
   		,array($name),1);
-  	if(!empty($users)) {
+  	if(!empty($users->getresults())) {
   		if(password_verify($pass,$users->getresults()->password)) {
   			return $users->getresults();
   		}

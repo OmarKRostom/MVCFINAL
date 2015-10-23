@@ -133,6 +133,13 @@ class DB
     return $this->_results;
   }
 
+  function fillInput($table,$field) {
+    $data = $this->retrive($field,$table)->getresults();
+    foreach($data as $item) {
+      echo "<option>". $item->en_name ."</option>";
+    }
+  }
+
 }
 
 
