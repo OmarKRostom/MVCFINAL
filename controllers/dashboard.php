@@ -3,7 +3,6 @@
 
 class dashboard extends controller
 {
-	public $display_cls = '';
 	public $msg = '';
 
 	function __construct() {

@@ -26,11 +26,11 @@
 							<th class="category"><?=$product->category;?></th>
 							<th class="category"><?=$product->price;?></th>
 							<th style="padding: 0;">
-								<div class="btn-group" style="width: 100%;">
-								  <button type="button" class="btn btn-danger delete-product" style="width: 50%;">
+								<div class="btn-group" style="width: 100%;height:100%;">
+								  <button type="button" class="btn btn-danger delete-product" style="width: 50%;height:100%;">
 								  	<i class="fa fa-trash"></i>
 								  </button>
-								  <button data-toggle="modal" data-target="#editproduct-Modal" type="button" class="btn btn-warning edit-product" style="width: 50%;">
+								  <button data-toggle="modal" data-target="#editproduct-Modal" type="button" class="btn btn-warning edit-product" style="width: 50%;height:100%;">
 								  	<i class="fa fa-pencil-square-o"></i>
 								  </button>
 								</div>

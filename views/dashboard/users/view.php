@@ -26,11 +26,11 @@
 							<th class="email"><?=$user->email;?></th>
 							<th class="permission"><?=$user->permission;?></th>
 							<th style="padding: 0;">
-								<div class="btn-group" style="width: 100%;">
-								  <button type="button" class="btn btn-danger delete-user" style="width: 50%;">
+								<div class="btn-group" style="width: 100%;height:100%;">
+								  <button type="button" class="btn btn-danger delete-user" style="width: 50%;height: 100%;">
 								  	<i class="fa fa-trash"></i>
 								  </button>
-								  <button data-toggle="modal" data-target="#edituser-Modal" type="button" class="btn btn-warning edit-user" style="width: 50%;">
+								  <button data-toggle="modal" data-target="#edituser-Modal" type="button" class="btn btn-warning edit-user" style="width: 50%;height: 100%;">
 								  	<i class="fa fa-pencil-square-o"></i>
 								  </button>
 								</div>
