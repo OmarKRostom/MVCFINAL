@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
     <title><?=$_SESSION['website_title'];?> dashboard</title>
     <script type="text/javascript" src="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/js/bootstrap.js"></script>
@@ -13,5 +14,18 @@
     <link rel="stylesheet" href="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/dist/css/AdminLTE.min.css">
     <script type="text/javascript" src="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/js/jquery.knob.js"></script>
     <link rel="stylesheet" href="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/dist/css/skins/skin-blue.min.css">
+    <script type="text/javascript">
+  WebFontConfig = {
+    google: { families: [ 'Raleway::latin' ] }
+  };
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })(); </script>
   </head>
   <body>

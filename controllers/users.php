@@ -1,4 +1,4 @@
-  <?php
+<?php
 
 class users extends dashboard
 {
@@ -15,6 +15,7 @@ class users extends dashboard
   	require('views/dashboard/users/view.php');
   }
   function add() {
+    var_dump($_POST);
   	if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']) && isset($_FILES['profilepic'])) {
       $name = $_POST['username'];
   		$pass = password_hash($_POST['password'],PASSWORD_BCRYPT);
@@ -47,9 +48,9 @@ class users extends dashboard
   }
   function getinfo() {
     $usrModel = new userModel();
-    $id = $_GET['id'];
+    $id = $_POST['id'];
     $user = $usrModel->getUser($id);
-    echo $user[0]->name . '/' . $user[0]->email;
+    echo json_encode($user);
   }
   
 }

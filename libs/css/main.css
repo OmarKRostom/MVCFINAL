@@ -1,9 +1,11 @@
 @import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
 body {
   /*font-family: 'Droid Arabic Kufi', sans-serif;*/
 }
 html, body {
     height:100%;
+    font-family: 'Raleway', sans-serif !important;
 }
 .tilesContainer {
   width: 85%;
@@ -51,4 +53,7 @@ html, body {
   text-align: center;
   font-weight: bold;
   font-size: 22px;
+}
+.content {
+    padding: 15px !important;
 }

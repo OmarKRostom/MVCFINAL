@@ -113,8 +113,17 @@
 		    <p>Some content in menu 1.</p>
 		  </div>
 		  <div id="warehouse" class="tab-pane fade">
-		    <h3>Menu 2</h3>
-		    <p>Some content in menu 2.</p>
+		    <div class="form-group">
+			  <label for="quantity">Quantity:</label>
+			  <input type="text" class="form-control" id="quantity" name="quantity">
+			</div>
+			<div class="form-group">
+			  <label for="discount">Discount:</label>
+			  <input type="text" class="form-control" id="discount" name="discount">
+			</div>
+			<div class="form-group">
+				
+			</div>
 		  </div>
 		</div>
       </div>

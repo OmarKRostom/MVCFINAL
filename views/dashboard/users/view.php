@@ -6,7 +6,7 @@
 <!--CONTENT GOES HERE -->
 <h1 class="headtitle"><i style="margin-right: 10px;" class="fa fa-users "></i>Users</h1>
 <div class="col-sm-9 col-xs-12">
-	<table class="table table-bordered">
+	<table class="table table-bordered" style="word-break:break-word;">
 		<thead>
 			<tr>
 				<th>#</th>
@@ -65,10 +65,10 @@
 		   User registered successfully.   
 		</div>
       <div class="modal-body">
-        <form class="theform" action="<?$GLOBALS['ADMIN_ROOT']?>users/add" method="post" enctype="multipart/form-data">
+        <form onsubmit="return checkall();" class="theform" action="<?$GLOBALS['ADMIN_ROOT']?>users/add" method="post" enctype="multipart/form-data">
         	<div class="form-group">
 			    <label for="usrname">Username :</label>
-			    <input name="username" type="text" class="form-control" id="usrname">
+			    <input name="username" type="text" class="form-control usrname" id="usrname">
 		  	</div>
 		  	<div class="form-group">
 			    <label for="password">Password :</label>
@@ -106,10 +106,6 @@
 			    <input name="username" type="text" class="ed-username form-control" id="usrname" value="">
 		  	</div>
 		  	<div class="form-group">
-			    <label for="password">Password :</label>
-			    <input name="password" type="password" class="ed-password form-control" id="password">
-		  	</div>
-		  	<div class="form-group">
 			    <label for="email">Email :</label>
 			    <input name="email" type="text" class="ed-email form-control" id="email">
 		  	</div>
@@ -130,8 +126,23 @@
 
 <script type="text/javascript">
 	
+	function hasWhiteSpace(s) {
+		s = s.trim();
+	  	return s.indexOf(' ') >= 0 && s.indexOf(' ') != s.length-1;
+	}
+	function checkall() {
+		return hasWhiteSpace() && passwordproper() && emailproper();
+	}
+	$('.usrname').focusout(function(){
+		if(hasWhiteSpace($('.usrname').val()))
+			alert("Not Available");
+		else
+			alert("Availbe");
+	});
+
 	$('.addsubmit').click(function(){
 		var formData = new FormData($('.theform')[0]);
+		console.log(formData);
 		$.ajax({
 			type: 'POST',
 			url: '<?=$GLOBALS['ADMIN_ROOT']?>users/add/',
@@ -160,14 +171,21 @@
 
 	$('.edit-user').click(function(){
 		var id = $(this).closest("tr").children('.id').text();
-		$.get(
-			'<?=$GLOBALS['ADMIN_ROOT']?>users/getinfo/',
-			{'id':id},
-			function(data) {
-				console.log(data);
-				$(".ed-username").val(data);
-			}
-		);
+		$.ajax({
+			type: 'POST',
+			url: '<?=$GLOBALS['ADMIN_ROOT']?>users/getinfo/',
+			async: false,
+			data: {'id':id},
+			success: function(data)
+			{
+				data = data.trim();
+				var jsonObj = $.parseJSON(data);
+				$(".ed-username").val(jsonObj[0].name);
+				$(".ed-email").val(jsonObj[0].email);
+			},
+			cache: false,
+			processData: true
+		});
 	});
 
 </script>
