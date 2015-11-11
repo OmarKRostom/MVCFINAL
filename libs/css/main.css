@@ -57,3 +57,12 @@ html, body {
 .content {
     padding: 15px !important;
 }
+.nav-tabs {
+  margin-bottom: 10px;
+}
+textarea {
+    resize: none;
+}
+.fileinput-upload {
+  display: none;
+}

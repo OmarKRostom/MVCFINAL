@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/dist/css/AdminLTE.min.css">
     <script type="text/javascript" src="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/js/jquery.knob.js"></script>
     <link rel="stylesheet" href="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" type="text/css" href="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/ion.rangeSlider-master/css/ion.rangeSlider.css">
+    <link rel="stylesheet" type="text/css" href="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/ion.rangeSlider-master/css/ion.rangeSlider.skinNice.css">
+    <script type="text/javascript" src="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/ion.rangeSlider-master/js/ion.rangeSlider.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/bootstrap-fileinput-master/css/fileinput.min.css">
+    <script type="text/javascript" src="<?=$GLOBALS['LOCAL_ROOT'];?>/libs/bootstrap-fileinput-master/js/fileinput.min.js"></script>
     <script type="text/javascript">
   WebFontConfig = {
     google: { families: [ 'Raleway::latin' ] }

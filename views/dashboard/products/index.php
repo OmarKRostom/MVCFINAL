@@ -81,18 +81,18 @@
 
 		<div class="tab-content">
 		  <div id="basic" class="tab-pane fade in active">
-		    <form method="post" style="margin-top:10px;">
+		    <form method="post" class="form1" action="<?$GLOBALS['ADMIN_ROOT']?>products/add">
 		    	<div class="form-group">
-				  <label for="prod_name">Product Name:</label>
-				  <input type="text" class="form-control" id="prod_name">
+				  <label for="name">Product Name:</label>
+				  <input name="product_name" type="text" class="form-control prod_name" id="prod_name">
 				</div>
 				<div class="form-group">
 				  <label for="price">Price:</label>
-				  <input type="text" class="form-control" id="price">
+				  <input name="price" type="text" class="form-control prod_price" id="price">
 				</div>
 				<div class="form-group">
 				  <label for="category">Category:</label>
-				  <select class="form-control" id="category">
+				  <select name="category" class="form-control prod_category" id="category">
 				  	<?php
 						DB::getInstance()->fillInput("categories","en_name");
 					?>
@@ -100,7 +100,7 @@
 				</div>
 				<div class="form-group">
 				  <label for="brand">Brand:</label>
-				  <select class="form-control" id="brand">
+				  <select name="brand" class="form-control prod_brand" id="brand">
 				  	<?php
 						DB::getInstance()->fillInput("brands","en_name");
 					?>
@@ -109,26 +109,40 @@
 		    </form>
 		  </div>
 		  <div id="estore" class="tab-pane fade">
-		    <h3>Menu 1</h3>
-		    <p>Some content in menu 1.</p>
+		    <form action="" class="gallery_images form2" enctype="multipart/form-data">
+	    		<div class="form-group">
+	    			<label for="images">Gallery Images:</label>
+			    	<input name="images[]" type="file" class="images"  multiple="multiple" />
+	    		</div>
+	    		<div class="form-group">
+	    			<label for="description">Description:</label>
+	    			<textarea name="description" rows="6" class="description form-control"></textarea>
+	    		</div>
+			</form>
 		  </div>
 		  <div id="warehouse" class="tab-pane fade">
-		    <div class="form-group">
-			  <label for="quantity">Quantity:</label>
-			  <input type="text" class="form-control" id="quantity" name="quantity">
-			</div>
-			<div class="form-group">
-			  <label for="discount">Discount:</label>
-			  <input type="text" class="form-control" id="discount" name="discount">
-			</div>
-			<div class="form-group">
-				
-			</div>
+		    <form method="post" class="form3">
+		    	<div class="form-group">
+				  <label for="quantity">Quantity:</label>
+				  <input type="text" class="form-control prod_quantity" id="quantity" name="quantity">
+				</div>
+				<div class="form-group">
+				  <label for="discount">Discount:</label>
+				  <input type="text" class="form-control prod_discount" id="discount" name="discount">
+				</div>
+				<div class="form-group">
+					
+				</div>
+		    </form>
 		  </div>
 		</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="btn-group" style="width:100%;">
+        	<button style="width:65%;" type="button" class="btn btn-success confirm-add">Submit</button>
+        	<button style="width:35%;" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
       </div>
     </div>
 
@@ -138,7 +152,41 @@
 
 
 <script type="text/javascript">
+	$('.confirm-add').click(function(){
+		var formData2 = new FormData($('.form2')[0]);
+		formData2.append("prod_name",$('.prod_name').val());
+		formData2.append("prod_price",$('.prod_price').val());
+		formData2.append("prod_brand",$('.prod_brand').val());
+		formData2.append("prod_category",$('.prod_category').val());
+		formData2.append("prod_quantity",$('.prod_quantity').val());
+		formData2.append("prod_discount",$('.prod_discount').val());
+		$.ajax({
+			type: 'POST',
+			url: '<?=$GLOBALS['ADMIN_ROOT']?>products/add/',
+			async: false,
+			data: formData2,
+			success: function(data)
+			{
+				$('.success-msg').show();
+			},
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	});
+
+
 	$(document).ready(function(){
+		$(".images").fileinput({
+			showPreview: false,
+			maxFileCount: 10,
+        	allowedFileExtensions: ["jpg", "jpeg", "png"]
+		});
+		$("#discount").ionRangeSlider({
+			min: 0,
+			max: 100,
+			step: 1
+		});
 		$(function() {
 	        $(".dial").knob({
 			    'readOnly':true,
