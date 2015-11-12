@@ -10,6 +10,7 @@ $GLOBALS['ICONS_LIST'] = ['fa fa-home','fa fa-users','fa fa-shopping-cart'];
 
 session_start();
 
+
 $app = new App;
 DB::getInstance();
 

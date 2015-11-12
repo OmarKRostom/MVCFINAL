@@ -43,15 +43,6 @@
 	</table>
 </div>
 <div class="col-sm-3 col-xs-12 gadget">
-	<div class="row">
-		<p style="margin-top: 35px;
-    color: #3C8DBC;" class="col-xs-8 gadget_text">
-			Available Products
-		</p>
-		<div class="col-xs-4 pull-right">
-			<input type="text" value="75" class="dial">
-		</div>
-	</div>
 	<form method="get">
 	<div class="input-group" style="margin-bottom:10px;">
 			<input type="text" name="product_name" class="form-control search_product_text" placeholder="Search By Product Name...">
@@ -72,6 +63,9 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Add a product</h4>
       </div>
+      <div class="success-msg alert-success" style="padding: 10px;display:none;">
+		   Product registered successfully.   
+		</div>
       <div class="modal-body">
         <ul class="nav nav-tabs">
 		  <li class="active"><a data-toggle="tab" href="#basic">Basic Settings</a></li>
@@ -187,13 +181,6 @@
 			max: 100,
 			step: 1
 		});
-		$(function() {
-	        $(".dial").knob({
-			    'readOnly':true,
-			    'width': 100,
-			    'height': 100
-			});
-	    });
 	});
 </script>
 

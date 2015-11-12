@@ -27,6 +27,7 @@ class dashboard extends controller
 				header("Location:" . $GLOBALS['ADMIN_ROOT'] . $GLOBALS['tmp_controller'] . '/' . $GLOBALS['tmp_method'] . '/');
 			} else {
 				$_SESSION['islogged'] = false;
+				echo "<p class='errmsg'>Wrong Username or Password.</p>";
 			}
 		}
 		$this->loadView('dashboard/users','login');

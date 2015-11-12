@@ -21,8 +21,8 @@
                 <div class="box-header with-border">
                   <h3 class="box-title"><?=$_SESSION['website_title'];?></h3>
                 </div><!-- /.box-header -->
-                <div class="alert-danger alert errmsg" style="display:none;">
-                  Username or password incorrect.
+                <div class="alert-danger alert errmsg-wrapper">
+                  
                 </div>
                 <!-- form start -->
                 <form class="form-horizontal" method="post" action="">
@@ -48,7 +48,14 @@
               </div><!-- /.box -->
         
     </div>
-
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $(".errmsg-wrapper").append($(".errmsg"));
+        if ($(".errmsg-wrapper").find(".errmsg").length == 0){ 
+          $(".errmsg-wrapper").hide();
+        }
+      });
+    </script>
 <?php
   require_once('views/system_footer.php');
 ?>
