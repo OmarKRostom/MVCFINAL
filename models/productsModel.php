@@ -14,6 +14,11 @@ class productsModel
     return $products->getresults();
   }
 
+  function getalloptions() {
+    $options = DB::getInstance()->retrive("*","options");;
+    return $options->getresults();
+  }
+
   function insertproduct($name,$price,$category,$brand,$images,$description,$quantity,$discount) {
   	DB::getInstance()->insert("products",array(
   			"name" => $name,
@@ -26,6 +31,19 @@ class productsModel
 	  		"discount" => $discount
   		)
   	);
+  }
+
+  function deleteproduct($id) {
+    $users = DB::getInstance()->delete("products",["id","=",$id]);
+  }
+
+  function insertoption($title,$data) {
+    $values = implode('-',$data);
+    DB::getInstance()->insert("options",array(
+      "title" => $title,
+      "value" => $values
+      )
+    );
   }
 
 }

@@ -66,3 +66,6 @@ textarea {
 .fileinput-upload {
   display: none;
 }
+.bootstrap-select {
+  width:100% !important;
+}

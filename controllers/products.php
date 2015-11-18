@@ -8,6 +8,7 @@ class products extends dashboard
   }
   function index() {  	
   	$all_products = $this->productsModel->getallproducts();
+    $options = $this->productsModel->getalloptions();
   	require('views/dashboard/products/index.php');
   }
   function add() {
@@ -35,10 +36,18 @@ class products extends dashboard
     );
   }
   function delete() {
-
+    $id = $_POST['id'];
+    $this->productsModel->deleteproduct($id);
   }
   function modify() {
 
+  }
+  function addoption() {
+    $option_name = $_POST['option_name'];
+    array_shift($_POST);
+    $option_vals = array_values($_POST);
+    var_dump($option_vals);
+    $this->productsModel->insertoption($option_name,$option_vals);
   }
 }
 

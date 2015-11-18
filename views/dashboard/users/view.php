@@ -72,7 +72,7 @@
 		  	</div>
 		  	<div class="form-group">
 			    <label for="password">Password :</label>
-			    <input name="password" type="password" class="form-control" id="password">
+			    <input name="password" type="password" class="form-control password" id="password">
 		  	</div>
 		  	<div class="form-group">
 			    <label for="email">Email :</label>
@@ -80,7 +80,7 @@
 		  	</div>
 		  	<div class="form-group">
 			    <label for="imageUpload">Profile Picture :</label>
-			    <input name="profilepic" type="file" class="form-control" id="imageUpload">
+			    <input name="profilepic" type="file" class="form-control profilepic" id="imageUpload">
 		  	</div>
         </form>
       </div>
@@ -111,7 +111,7 @@
 		  	</div>
 		  	<div class="form-group">
 			    <label for="imageUpload">Profile Picture :</label>
-			    <input name="profilepic" type="file" class="ed-imageUpload form-control" id="imageUpload">
+			    <input name="profilepic" type="file" class="ed-imageUpload profilepic form-control" id="imageUpload">
 		  	</div>
         </form>
       </div>
@@ -129,6 +129,9 @@
 	function hasWhiteSpace(s) {
 		s = s.trim();
 	  	return s.indexOf(' ') >= 0 && s.indexOf(' ') != s.length-1;
+	}
+	function passwordproper() {
+		var s = $(".password").val();
 	}
 	function checkall() {
 		return hasWhiteSpace() && passwordproper() && emailproper();
@@ -160,13 +163,29 @@
 
 	$('.delete-user').click(function(){
 		var id = $(this).closest("tr").children('.id').text();
-		$.post(
+		swal({
+			title: "Are you sure you want to delete this user ?",
+			text: "This is an irreversible action!",
+			type: "warning",
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonTet: "Yes, delete it!",
+			closeOnConfirm: false
+
+		},function() {
+			$.post(
 			'<?=$GLOBALS['ADMIN_ROOT']?>users/delete/',
 			{'id':id},
 			function(data) {
-				window.location.href =  "<?=$GLOBALS['ADMIN_ROOT'];?>users/index/";
+				swal({
+					title: "User deleted successfully.",
+					type: "success"
+				},function(){
+					window.location.href =  "<?=$GLOBALS['ADMIN_ROOT'];?>users/index/";
+				})
 			}
-		);
+			);	
+		});
 	});
 
 	$('.edit-user').click(function(){
@@ -185,6 +204,14 @@
 			},
 			cache: false,
 			processData: true
+		});
+	});
+
+	$(document).ready(function(){
+		$(".profilepic").fileinput({
+			showPreview: false,
+			maxFileCount: 10,
+        	allowedFileExtensions: ["jpg", "jpeg", "png"]
 		});
 	});
 
