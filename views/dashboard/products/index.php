@@ -5,8 +5,8 @@
 
 <!--CONTENT GOES HERE -->
 <h1 class="headtitle"><i style="margin-right: 10px;" class="fa fa-shopping-cart"></i>Products</h1>
-<div class="col-sm-9 col-xs-12">
-	<table class="table table-bordered tablebox">
+<div class="col-sm-9 col-xs-12 nopads">
+	<table class="table table-bordered tablebox" style="word-break:break-word;">
 		<thead>
 			<tr>
 				<th>#</th>
@@ -53,6 +53,19 @@
 	</form>
 	<button data-toggle="modal" data-target="#addproduct_Modal" style="width:100%;" class="btn btn-success"><i style="margin-right:10px;" class="fa fa-cart-plus"></i><span>Add product</span></button>
 	<button data-toggle="modal" data-target="#addoption_Modal" style="width:100%;margin-top:10px;" class="btn btn-success"><i style="margin-right:10px;" class="fa fa-cart-plus"></i><span>Add option</span></button>
+</div>
+
+<div class="row pages">
+	<div class="col-xs-9">
+		<?php	
+			while($num_pages > 0) {
+				?>
+					<a class="<?php if($indexer===intval(end(explode('/',$_GET['url'])))) echo'pagesactive';?>" href="<?=$indexer;?>"><?=$indexer++;?></a>
+				<?php
+				$num_pages--;
+			}
+		?>
+	</div>
 </div>
 
 <div id="addoption_Modal" class="modal fade" role="dialog">
@@ -163,24 +176,26 @@
 				  <label for="discount">Discount:</label>
 				  <input type="text" class="form-control prod_discount" id="discount" name="discount">
 				</div>
+				<div class="options_wrapper">
 				<?php
 					foreach($options as $option) {
 						$data = explode('-',$option->value);
 						?>
 							<div class="form-group">
-							<label for="options_value"><?=$option->title;?>:</label>
-							<select name="options_value" class="selectpicker" multiple>
-								<?php
-								foreach($data as $item) {
-									?>
-										<option><?=$item;?></option>
+								<label for="options_value"><?=$option->title;?>:</label>
+								<select name="options_value" class="selectpicker opval" multiple>
 									<?php
-								}?>
-							</select>
+									foreach($data as $item) {
+										?>
+											<option><?=$item;?></option>
+										<?php
+									}?>
+								</select>
 							</div>
 					<?php
 					}
 				?>
+				</div>
 		    </form>
 		  </div>
 		</div>
@@ -233,6 +248,7 @@
 	});
 
 	$('.confirm-add').click(function(){
+		var data = new Array();
 		var formData2 = new FormData($('.form2')[0]);
 		formData2.append("prod_name",$('.prod_name').val());
 		formData2.append("prod_price",$('.prod_price').val());
@@ -240,6 +256,17 @@
 		formData2.append("prod_category",$('.prod_category').val());
 		formData2.append("prod_quantity",$('.prod_quantity').val());
 		formData2.append("prod_discount",$('.prod_discount').val());
+		$('.selectpicker.opval').each(function(index) {
+			data.push($(this).val()+'|');
+		});
+		var options = data.toString();
+		options = options.substring(0,options.length-1);
+		for(var i=0;i<options.length;i++) {
+			if(options[i]=='|') {
+				options = options.substring(0,i+1)+options.substring(i+2,options.length);
+			}
+		} 
+		formData2.append("options",options);
 		$.ajax({
 			type: 'POST',
 			url: '<?=$GLOBALS['ADMIN_ROOT']?>products/add/',

@@ -1,7 +1,7 @@
 <?php
 
 
-class productsModel
+class productsModel extends model
 {
 
   function __construct()
@@ -9,8 +9,8 @@ class productsModel
 
   }
 
-  function getallproducts() {
-  	$products = DB::getInstance()->retrive("*","products");;
+  function getallproducts($start,$limit) {
+  	$products = DB::getInstance()->retrive("*","products",array(),[$start,$limit]);
     return $products->getresults();
   }
 
@@ -19,7 +19,7 @@ class productsModel
     return $options->getresults();
   }
 
-  function insertproduct($name,$price,$category,$brand,$images,$description,$quantity,$discount) {
+  function insertproduct($name,$price,$category,$brand,$images,$description,$quantity,$discount,$options) {
   	DB::getInstance()->insert("products",array(
   			"name" => $name,
 	  		"price" => $price,
@@ -28,7 +28,8 @@ class productsModel
 	  		"images" => $images,
 	  		"description" => $description,
 	  		"quantity" => $quantity,
-	  		"discount" => $discount
+	  		"discount" => $discount,
+        "available_options" => $options
   		)
   	);
   }

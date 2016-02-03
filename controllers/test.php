@@ -2,8 +2,8 @@
 
 class test extends controller
 {
-  function index() {
-  	require('views/home/index.php');
+  public function index() {
+  	require('views/dashboard/test/index.php');
   }
 }
 

@@ -30,7 +30,7 @@ class dashboard extends controller
 				echo "<p class='errmsg'>Wrong Username or Password.</p>";
 			}
 		}
-		$this->loadView('dashboard/users','login');
+		require('views/dashboard/users/login.php');
 	}
 
 	function logout() {

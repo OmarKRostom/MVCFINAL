@@ -2,8 +2,8 @@
 
 class home extends dashboard
 {
-  function index() {
-  	$this->loadView('dashboard/home','view');
+  public function index() {
+  	require('views/dashboard/home/index.php');
   }
 }
 

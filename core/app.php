@@ -19,10 +19,12 @@ class app
       $this->isdash = 1;
       array_shift($url);
     }
-    if(empty($url)) {
+    if(empty($url) && !$this->isdash) {
       $this->method = 'index';
       $this->controller = 'main';
       $this->controller = new $this->controller;
+    } else if(empty($url) && $this->isdash) {
+      header('Location:' . $GLOBALS['ADMIN_ROOT'] . 'home/index/');
     } else if(file_exists('controllers/' . $url[0] . '.php')) {
       $this->controller = new $url[0];
       $this->tmpcont = $url[0];
@@ -46,9 +48,15 @@ class app
           header('Location:' . $GLOBALS['ADMIN_ROOT'] . $this->tmpcont . '//index/');
         }
       } else if(!$this->controller instanceof dashboard && $this->isdash === 0) {
-        $this->method = $url[1];
-        $this->tempmethod = $url[1];
-        unset($url[1]);
+        if(isset($url[1])) {
+          if(method_exists($this->controller, $url[1])) {
+            $this->method = $url[1];
+            $this->tempmethod = $url[1];
+            unset($url[1]);
+          }
+        } else {
+          $this->method = $this->tmpmethod = 'index';
+        }
       }
       else {
         $this->controller = new error();
@@ -58,6 +66,7 @@ class app
       header('Location:' . $GLOBALS['LOCAL_ROOT'] . 'error/index/');
     }
     $this->prams = $url ? array_values($url) : [] ;
+    $this->prams = implode('',$this->prams);
     call_user_func([$this->controller,$this->method],$this->prams);
   }
 

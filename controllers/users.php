@@ -2,16 +2,18 @@
 
 class users extends dashboard
 {
-  function __construct() {
+    private $usrModel;
 
+  function __construct() {
+    $this->usrModel = new userModel();
   }
   function index() {
-    $usrModel = new userModel();
-    $all_users = $usrModel->getUsers(); 
+    
+    $all_users = $this->usrModel->getUsers(); 
     if(isset($_GET['username'])) 
-       $all_users = $usrModel->getUsers($_GET['username']); 
+       $all_users = $this->usrModel->getUsers($_GET['username']); 
     else
-       $all_users = $usrModel->getUsers(); 
+       $all_users = $this->usrModel->getUsers(); 
   	require('views/dashboard/users/view.php');
   }
   function add() {
@@ -35,21 +37,19 @@ class users extends dashboard
           echo "NO";
         }
       }
-      require_once('models/userModel.php');
       //INSERT USER DATA
-      $usrModel = new userModel();
-      $usrModel->createUser($name,$pass,$email,$file_name_new);
+      $this->usrModel->createUser($name,$pass,$email,$file_name_new);
   	}
   }
   function delete() {
     $usrModel = new userModel();
     $id = $_POST['id'];
-    $usrModel->deleteUser($id);
+    $this->usrModel->deleteUser($id);
   }
   function getinfo() {
     $usrModel = new userModel();
     $id = $_POST['id'];
-    $user = $usrModel->getUser($id);
+    $user = $this->usrModel->getUser($id);
     echo json_encode($user);
   }
   

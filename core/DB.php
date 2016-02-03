@@ -9,12 +9,13 @@ class DB
           $_query,
           $_results,
           $_count = 0;
+  private $sql;
 
   //Concerning connecting to the database.
   private function __construct()
   {
       try {
-        $this->_pdo = new PDO('mysql:host=localhost;dbname=dashboard_db','root','');
+        $this->_pdo = new PDO('mysql:host=localhost;dbname=dashboard_db;charset=utf8','root','');
       } catch (PDOException $e) {
         die($e->getMessage());
       }
@@ -28,10 +29,9 @@ class DB
       return self::$_instance;
   }
 
-  function query($sql,$params = array(),$typeofquery = 0) {
-
+  function query($thesql,$params = array(),$typeofquery = 0) {
     $this->_error = false;
-    if($this->_query = $this->_pdo->prepare($sql)) {
+    if($this->_query = $this->_pdo->prepare($thesql)) {
 
       if($this->_query->execute($params) && $typeofquery===0) {
         $this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);
@@ -44,19 +44,19 @@ class DB
      return $this;
    }
 
-  function action($act,$what,$table,$where = array(),$typeofquery = 0) {
-
+  function action($act,$what,$table,$where = array(),$limit = array(),$typeofquery = 0) {
+    $limitclause = !empty($limit) ? 'LIMIT ' . $limit[0] .', '. $limit[1] : '';
     if(!empty($where)) {
       $field = $where[0];
       $operator = $where[1];
       $values = $where[2];
 
-      $sql = "{$act} {$what} FROM {$table} WHERE {$field} {$operator} ?";
-      $this->query($sql,array($values),$typeofquery);
+      $this->sql = "{$act} {$what} FROM {$table} WHERE {$field} {$operator} ? " . $limitclause;
+      $this->query($this->sql,array($values),$typeofquery);
         
     } else {
-      $sql = "{$act} {$what} FROM {$table}";
-      $this->query($sql,array(),$typeofquery);
+      $this->sql = "{$act} {$what} FROM {$table} " . $limitclause;
+      $this->query($this->sql,array(),$typeofquery);
     }
 
     return $this;
@@ -77,31 +77,42 @@ class DB
         $count++;
       }
 
-      $sql = "INSERT INTO {$table} (`" . implode('`, `',$keys) . "`) VALUES ({$values})";
-      if($this->query($sql,$vals)) {
+      $this->sql = "INSERT INTO {$table} (`" . implode('`, `',$keys) . "`) VALUES ({$values})";
+      if($this->query($this->sql,$vals)) {
         return true;
       } else {
         return false;
       }
     }
+  }
+
+  function printSQL() {
+    echo $this->sql;
   }
 
   function update($table,$where,$set) {
-    if(isset($where) && isset($set)) {
+    if(!empty($where) && !empty($set)) {
       $values = '';
       $count = 1;
+      $x=1;
 
       foreach($set as $key=>$value) {
-        $values .= $key . '=';
+        $values .= $key;
         if($count<count($set)) {
-          $values .= '?, ';
+          $values .= '= ? ';
         }
-        $count++;
+        if($x!=count($set)) $values .= ',';
+        echo(count($set));
+        $x++;
       }
-      $values .= '?';
-      $sql = "UPDATE {$table} SET {$values} WHERE {$where}";
-      $set = array_values($set);
-      if($this->query($sql,$set)) {
+      $whereOperand = $where[0];
+      $whereOperator = $where[1];
+      $whereValue = $where[2];
+      $this->sql = "UPDATE {$table} SET {$values} WHERE {$whereOperand} {$whereOperator} ?";
+      echo $this->sql;
+      $bindVals = array_values($set);
+      array_push($bindVals, $whereValue);
+      if($this->query($this->sql,$bindVals)) {
         return true;
       } else {
         return false;
@@ -109,8 +120,8 @@ class DB
     }
   }
 
-  function retrive($what,$table,$where = array(),$typeofquery = 0) {
-    return $this->action("SELECT",$what,$table,$where,$typeofquery);
+  function retrive($what,$table,$where = array(),$limit = array(),$typeofquery = 0) {
+    return $this->action("SELECT",$what,$table,$where,$limit,$typeofquery);
   }
 
   function delete($table,$where) {
@@ -119,9 +130,9 @@ class DB
       $operator = $where[1];
       $val = $where[2];
 
-      $sql = "DELETE FROM {$table} WHERE {$field} {$operator} ?";
+      $this->sql = "DELETE FROM {$table} WHERE {$field} {$operator} ?";
 
-      if($this->query($sql,array($val))) {
+      if($this->query($this->sql,array($val))) {
         return true;
       } else {
         return false;
@@ -138,6 +149,10 @@ class DB
     foreach($data as $item) {
       echo "<option>". $item->en_name ."</option>";
     }
+  }
+
+  function countrows($table) {
+    return $this->query("SELECT COUNT(*) as rows FROM {$table};",array($table))->getresults();
   }
 
 }

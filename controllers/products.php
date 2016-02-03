@@ -6,8 +6,12 @@ class products extends dashboard
   function __construct() {
     $this->productsModel = new productsModel();
   }
-  function index() {  	
-  	$all_products = $this->productsModel->getallproducts();
+  function index($pageIndex) {
+    $index = empty($pageIndex) ? 1 : intval($pageIndex);
+  	$all_products = $this->productsModel->getallproducts(($index-1)*10,10);
+    $num_pages = $this->productsModel->countPages("products")[0]->rows;
+    $num_pages = ceil(intval($num_pages)/10);
+    $indexer = 1;
     $options = $this->productsModel->getalloptions();
   	require('views/dashboard/products/index.php');
   }
@@ -17,22 +21,23 @@ class products extends dashboard
     $image_names = array_values($_FILES['images']['name']);
     $image_tmps = array_values($_FILES['images']['tmp_name']);
     $image_sizes = array_values($_FILES['images']['size']);
-    foreach($image_names as $key=>$img) {
-      $ext = strtolower(end(explode('.',$img)));
-      $new_img = uniqid('prod',true) . '.' . $ext;
-      $file_new_location = 'uploads/products/' . $new_img;
-      if(move_uploaded_file($image_tmps[$key], $file_new_location)) {
-          echo "YES";
-        } else {
-          echo "NO";
-        }
-      array_push($allfiles,$new_img); 
-    }
+    if(!empty($image_names[0]))
+      foreach($image_names as $key=>$img) {
+        $ext = strtolower(end(explode('.',$img)));
+        $new_img = uniqid('prod',true) . '.' . $ext;
+        $file_new_location = 'uploads/products/' . $new_img;
+        if(move_uploaded_file($image_tmps[$key], $file_new_location)) {
+            echo "Uploaded successfully.";
+          } else {
+            echo "Some error occured.";
+          }
+        array_push($allfiles,$new_img); 
+      }
     $images = implode('/',$allfiles);
     $this->productsModel->insertProduct(
       $_POST['prod_name'],$_POST['prod_price'],$_POST['prod_category']
       ,$_POST['prod_brand'],$images,$_POST['description'],$_POST['prod_quantity']
-      ,$_POST['prod_discount']
+      ,$_POST['prod_discount'],$_POST['options']
     );
   }
   function delete() {

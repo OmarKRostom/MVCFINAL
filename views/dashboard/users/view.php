@@ -5,7 +5,7 @@
 
 <!--CONTENT GOES HERE -->
 <h1 class="headtitle"><i style="margin-right: 10px;" class="fa fa-users "></i>Users</h1>
-<div class="col-sm-9 col-xs-12">
+<div class="col-sm-9 col-xs-12 nopads">
 	<table class="table table-bordered" style="word-break:break-word;">
 		<thead>
 			<tr>
@@ -204,14 +204,6 @@
 			},
 			cache: false,
 			processData: true
-		});
-	});
-
-	$(document).ready(function(){
-		$(".profilepic").fileinput({
-			showPreview: false,
-			maxFileCount: 10,
-        	allowedFileExtensions: ["jpg", "jpeg", "png"]
 		});
 	});
 
